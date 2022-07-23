@@ -11,7 +11,7 @@ import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
-public class ClienteRepository {
+public class ClienteRepositoryJdbcTemplate {
 
     private static final String INSERT = "insert into cliente (nome) values (?)";
     private static final String UPDATE = "update CLIENTE set nome = ? where id = ?";
