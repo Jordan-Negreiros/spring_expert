@@ -3,23 +3,23 @@ package io.github.jordannegreiros.vendas.domain.entity;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.math.BigDecimal;
 
 @Data
 @Entity
-@Table(name = "cliente")
+@Table(name = "produto")
 @NoArgsConstructor
 @AllArgsConstructor
-public class Cliente {
+public class Produto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @Column(name = "nome", length = 100)
-    private String name;
+    @Column(name = "descricao")
+    private String descricao;
 
-    @OneToMany(mappedBy = "cliente", fetch = FetchType.EAGER)
-    private Set<Pedido> pedidos;
+    @Column(name = "preco_unitario")
+    private BigDecimal precoUnitario;
 
 }
