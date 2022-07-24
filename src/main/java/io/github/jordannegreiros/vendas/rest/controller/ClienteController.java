@@ -1,23 +1,14 @@
 package io.github.jordannegreiros.vendas.rest.controller;
 
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/api/clientes")
 public class ClienteController {
 
     @ResponseBody
-    @RequestMapping(
-        value = "/hello/{nome}",
-        method = RequestMethod.GET,
-        consumes = {MediaType.APPLICATION_JSON_VALUE},
-        produces = {MediaType.APPLICATION_JSON_VALUE}
-    )
+    @GetMapping("/hello/{nome}")
     public String helloCliente(@PathVariable("nome") String nomeCliente) {
         return String.format("Hello %s", nomeCliente);
     }
