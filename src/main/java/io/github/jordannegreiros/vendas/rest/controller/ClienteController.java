@@ -1,5 +1,6 @@
 package io.github.jordannegreiros.vendas.rest.controller;
 
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,7 +12,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class ClienteController {
 
     @ResponseBody
-    @RequestMapping(value = "/hello/{nome}", method = RequestMethod.GET)
+    @RequestMapping(
+        value = "/hello/{nome}",
+        method = RequestMethod.GET,
+        consumes = {MediaType.APPLICATION_JSON_VALUE},
+        produces = {MediaType.APPLICATION_JSON_VALUE}
+    )
     public String helloCliente(@PathVariable("nome") String nomeCliente) {
         return String.format("Hello %s", nomeCliente);
     }
