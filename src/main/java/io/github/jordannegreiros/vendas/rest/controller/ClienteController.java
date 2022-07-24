@@ -18,7 +18,7 @@ public class ClienteController {
 
     @GetMapping("/{id}")
     @ResponseBody
-    public ResponseEntity<Cliente> getClienteById(@PathVariable Integer id) {
+    public ResponseEntity<Cliente> get(@PathVariable Integer id) {
         var cliente = clienteRepository.findById(id)
             .orElseThrow(ClienteNotFoundException::new);
         return ResponseEntity.ok(cliente);
@@ -29,5 +29,26 @@ public class ClienteController {
     public ResponseEntity<Cliente> save(@RequestBody Cliente cliente) {
         var clienteSaved = clienteRepository.save(cliente);
         return ResponseEntity.status(HttpStatus.CREATED).body(clienteSaved);
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseBody
+    public ResponseEntity<Void> delete(@PathVariable Integer id) {
+        var cliente = clienteRepository.findById(id)
+            .orElseThrow(ClienteNotFoundException::new);
+        clienteRepository.delete(cliente);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/{id}")
+    @ResponseBody
+    public ResponseEntity<Cliente> update(@PathVariable Integer id, @RequestBody  Cliente clienteRequest) {
+        var clienteUpdated = clienteRepository.findById(id)
+            .map(clienteDB -> {
+                clienteDB.setName(clienteRequest.getName());
+                return clienteRepository.save(clienteDB);
+            }).orElseThrow(ClienteNotFoundException::new);
+
+        return ResponseEntity.ok(clienteUpdated);
     }
 }
