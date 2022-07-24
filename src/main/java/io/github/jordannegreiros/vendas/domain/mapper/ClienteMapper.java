@@ -1,4 +1,4 @@
-package io.github.jordannegreiros.vendas.domain;
+package io.github.jordannegreiros.vendas.domain.mapper;
 
 import io.github.jordannegreiros.vendas.domain.entity.Cliente;
 import org.mapstruct.Mapper;

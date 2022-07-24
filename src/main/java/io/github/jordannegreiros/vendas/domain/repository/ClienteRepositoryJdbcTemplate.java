@@ -1,6 +1,6 @@
 package io.github.jordannegreiros.vendas.domain.repository;
 
-import io.github.jordannegreiros.vendas.domain.ClienteMapper;
+import io.github.jordannegreiros.vendas.domain.mapper.ClienteMapper;
 import io.github.jordannegreiros.vendas.domain.entity.Cliente;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
