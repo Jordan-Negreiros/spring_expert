@@ -7,12 +7,9 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Getter
-@Setter
+@Data
 @Entity
 @Table(name = "pedido")
-@NoArgsConstructor
-@AllArgsConstructor
 public class Pedido {
 
     @Id

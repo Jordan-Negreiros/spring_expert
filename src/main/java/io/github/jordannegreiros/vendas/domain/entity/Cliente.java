@@ -5,12 +5,9 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.Set;
 
-@Getter
-@Setter
+@Data
 @Entity
 @Table(name = "cliente")
-@NoArgsConstructor
-@AllArgsConstructor
 public class Cliente {
 
     @Id

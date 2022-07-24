@@ -5,12 +5,9 @@ import lombok.*;
 import javax.persistence.*;
 import java.math.BigDecimal;
 
-@Getter
-@Setter
+@Data
 @Entity
 @Table(name = "produto")
-@NoArgsConstructor
-@AllArgsConstructor
 public class Produto {
 
     @Id

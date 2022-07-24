@@ -4,12 +4,9 @@ import lombok.*;
 
 import javax.persistence.*;
 
-@Getter
-@Setter
+@Data
 @Entity
 @Table(name = "item_pedido")
-@NoArgsConstructor
-@AllArgsConstructor
 public class ItemPedido {
 
     @Id
