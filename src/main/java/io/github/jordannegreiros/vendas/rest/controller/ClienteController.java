@@ -7,7 +7,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,39 +19,39 @@ public class ClienteController {
     private final ClienteRepository clienteRepository;
 
     @GetMapping("/{id}")
-    public ResponseEntity<Cliente> get(@PathVariable Integer id) {
-        var cliente = clienteRepository.findById(id)
+    @ResponseStatus(code = HttpStatus.OK)
+    public Cliente get(@PathVariable Integer id) {
+        return clienteRepository.findById(id)
             .orElseThrow(ClienteNotFoundException::new);
-        return ResponseEntity.ok(cliente);
     }
 
     @PostMapping
-    public ResponseEntity<Cliente> save(@RequestBody Cliente cliente) {
-        var clienteSaved = clienteRepository.save(cliente);
-        return ResponseEntity.status(HttpStatus.CREATED).body(clienteSaved);
+    @ResponseStatus(code = HttpStatus.CREATED)
+    public Cliente save(@RequestBody Cliente cliente) {
+        return clienteRepository.save(cliente);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Integer id) {
+    @ResponseStatus(code = HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable Integer id) {
         var cliente = clienteRepository.findById(id)
             .orElseThrow(ClienteNotFoundException::new);
         clienteRepository.delete(cliente);
-        return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Cliente> update(@PathVariable Integer id, @RequestBody  Cliente clienteRequest) {
-        var clienteUpdated = clienteRepository.findById(id)
+    @ResponseStatus(code = HttpStatus.OK)
+    public Cliente update(@PathVariable Integer id, @RequestBody  Cliente clienteRequest) {
+        return clienteRepository.findById(id)
             .map(clienteDB -> {
                 clienteDB.setName(clienteRequest.getName());
                 return clienteRepository.save(clienteDB);
             }).orElseThrow(ClienteNotFoundException::new);
-
-        return ResponseEntity.ok(clienteUpdated);
     }
 
     @GetMapping
-    public ResponseEntity<List<Cliente>> getList(Cliente filtro) {
+    @ResponseStatus(code = HttpStatus.OK)
+    public List<Cliente> getList(Cliente filtro) {
 
         var matcher = ExampleMatcher
             .matching()
@@ -60,7 +59,6 @@ public class ClienteController {
             .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
         var example =  Example.of(filtro, matcher);
 
-        var clientes = clienteRepository.findAll(example);
-        return ResponseEntity.ok(clientes);
+        return clienteRepository.findAll(example);
     }
 }
