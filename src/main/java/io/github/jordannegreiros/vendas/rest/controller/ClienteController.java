@@ -4,10 +4,14 @@ import io.github.jordannegreiros.vendas.domain.ClienteNotFoundException;
 import io.github.jordannegreiros.vendas.domain.entity.Cliente;
 import io.github.jordannegreiros.vendas.domain.repository.ClienteRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/api/clientes")
@@ -50,5 +54,19 @@ public class ClienteController {
             }).orElseThrow(ClienteNotFoundException::new);
 
         return ResponseEntity.ok(clienteUpdated);
+    }
+
+    @GetMapping
+    @ResponseBody
+    public ResponseEntity<List<Cliente>> getList(Cliente filtro) {
+
+        var matcher = ExampleMatcher
+            .matching()
+            .withIgnoreCase()
+            .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
+        var example =  Example.of(filtro, matcher);
+
+        var clientes = clienteRepository.findAll(example);
+        return ResponseEntity.ok(clientes);
     }
 }
