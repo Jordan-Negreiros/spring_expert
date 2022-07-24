@@ -8,12 +8,11 @@ import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("/api/clientes")
 @RequiredArgsConstructor
 public class ClienteController {
@@ -21,7 +20,6 @@ public class ClienteController {
     private final ClienteRepository clienteRepository;
 
     @GetMapping("/{id}")
-    @ResponseBody
     public ResponseEntity<Cliente> get(@PathVariable Integer id) {
         var cliente = clienteRepository.findById(id)
             .orElseThrow(ClienteNotFoundException::new);
@@ -29,14 +27,12 @@ public class ClienteController {
     }
 
     @PostMapping
-    @ResponseBody
     public ResponseEntity<Cliente> save(@RequestBody Cliente cliente) {
         var clienteSaved = clienteRepository.save(cliente);
         return ResponseEntity.status(HttpStatus.CREATED).body(clienteSaved);
     }
 
     @DeleteMapping("/{id}")
-    @ResponseBody
     public ResponseEntity<Void> delete(@PathVariable Integer id) {
         var cliente = clienteRepository.findById(id)
             .orElseThrow(ClienteNotFoundException::new);
@@ -45,7 +41,6 @@ public class ClienteController {
     }
 
     @PutMapping("/{id}")
-    @ResponseBody
     public ResponseEntity<Cliente> update(@PathVariable Integer id, @RequestBody  Cliente clienteRequest) {
         var clienteUpdated = clienteRepository.findById(id)
             .map(clienteDB -> {
@@ -57,7 +52,6 @@ public class ClienteController {
     }
 
     @GetMapping
-    @ResponseBody
     public ResponseEntity<List<Cliente>> getList(Cliente filtro) {
 
         var matcher = ExampleMatcher
